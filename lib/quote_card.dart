@@ -89,9 +89,10 @@ class _QuoteCardState extends State<QuoteCard> {
                   ),
                   const Spacer(),
                   Text(
-                    '-${widget.quote.author}',
+                    '-${widget.quote.author.split(",").first}',
                     style: const TextStyle(
-                        color: Color.fromARGB(255, 108, 107, 165)),
+                        color: Color.fromARGB(255, 108, 107, 165),
+                        fontSize: 14),
                   ),
                 ],
               ),
