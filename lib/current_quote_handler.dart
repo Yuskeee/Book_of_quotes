@@ -7,7 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:recreating_ui/quote.dart';
 
 Future<Quote> fetchQuote() async {
-  final response = await http.get(Uri.parse('https://type.fit/api/quotes'));
+  final response =
+      await http.get(Uri.parse('https://api.quotable.io/quotes/random'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
