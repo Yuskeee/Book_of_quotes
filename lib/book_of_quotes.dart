@@ -1,15 +1,16 @@
-
 import 'package:flutter/material.dart';
 import 'package:page_flip/page_flip.dart';
+
+import 'favorites_handler.dart';
 
 class BookOfQuotes extends StatefulWidget {
   const BookOfQuotes({Key? key}) : super(key: key);
 
   @override
-  State<BookOfQuotes> createState() => _BookOfQuotesState();
+  State<BookOfQuotes> createState() => BookOfQuotesState();
 }
 
-class _BookOfQuotesState extends State<BookOfQuotes> {
+class BookOfQuotesState extends State<BookOfQuotes> {
   final double _zFactor = 1.01;
   final double _xDisplacementToRight = -5;
 
@@ -19,28 +20,63 @@ class _BookOfQuotesState extends State<BookOfQuotes> {
   Widget build(BuildContext context) {
     Size size = Size(MediaQuery.of(context).size.width * 0.8,
         MediaQuery.of(context).size.height * 0.8);
+
+    // <Widget>[] of Favorite Quotes
+    List<Widget> favoriteQuotes = Favorites.getQuotes().map((quote) {
+      return Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            bottomLeft: Radius.circular(10),
+          ),
+          boxShadow: [
+            BoxShadow(
+                color: Color.fromARGB(255, 106, 106, 106),
+                offset: Offset(2, 5),
+                blurRadius: 10),
+          ],
+        ),
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * 0.9,
+          maxHeight: MediaQuery.of(context).size.height * 0.8 * _zFactor,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              quote.text,
+              style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                  fontFamily: 'Futura',
+                  fontWeight: FontWeight.w600),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 10),
+            const Divider(
+              color: Colors.black,
+              thickness: 1,
+              indent: 20,
+              endIndent: 20,
+            ),
+            Text(
+              quote.author,
+              style: const TextStyle(
+                  fontSize: 15,
+                  color: Colors.black,
+                  fontFamily: 'Futura',
+                  fontWeight: FontWeight.w600),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      );
+    }).toList();
+
     return Row(
       // textDirection: TextDirection.rtl,
       children: [
-        // Container(
-        //   decoration: const BoxDecoration(
-        //     color: Colors.white,
-        //     borderRadius: BorderRadius.only(
-        //       topRight: Radius.circular(10),
-        //       bottomRight: Radius.circular(10),
-        //     ),
-        //     boxShadow: [
-        //       BoxShadow(
-        //           color: Color.fromARGB(255, 106, 106, 106),
-        //           offset: Offset(2, 5),
-        //           blurRadius: 10),
-        //     ],
-        //   ),
-        //   constraints: BoxConstraints(
-        //     maxWidth: MediaQuery.of(context).size.width * 0.02,
-        //     maxHeight: MediaQuery.of(context).size.height * 0.8,
-        //   ),
-        // ),
         Stack(
           clipBehavior: Clip.none,
           children: [
@@ -52,10 +88,10 @@ class _BookOfQuotesState extends State<BookOfQuotes> {
               child: Container(
                 decoration: const BoxDecoration(
                   color: Colors.red,
-                  // borderRadius: BorderRadius.only(
-                  //   topLeft: Radius.circular(10),
-                  //   bottomLeft: Radius.circular(10),
-                  // ),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  ),
                   boxShadow: [
                     BoxShadow(
                         color: Color.fromARGB(255, 106, 106, 106),
@@ -101,154 +137,18 @@ class _BookOfQuotesState extends State<BookOfQuotes> {
               height: size.height,
               child: PageFlipWidget(
                   key: _controllerPageFlip,
-                  // lastPage: Container(
-                  //     child: const Center(
-                  //         child: Text('Last Quote So Far!',
-                  //             style: TextStyle(
-                  //               color: Colors.black,
-                  //               fontSize: 20,
-                  //               fontWeight: FontWeight.bold,
-                  //             )))),
                   cutoffForward: 0.5,
                   cutoffPrevious: 0.1,
-                  children: <Widget>[
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Color.fromARGB(255, 106, 106, 106),
-                              offset: Offset(2, 5),
-                              blurRadius: 10),
-                        ],
-                      ),
-                      width: size.width,
-                      height: size.height,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            child: const Text(
-                              '“The best way to predict the future is to create it.”',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            child: const Text(
-                              'Abraham Lincoln',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Color.fromARGB(255, 106, 106, 106),
-                              offset: Offset(2, 5),
-                              blurRadius: 10),
-                        ],
-                      ),
-                      width: size.width,
-                      height: size.height,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            child: const Text(
-                              '“Hello, World!”',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            child: const Text(
-                              'Unknown',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Color.fromARGB(255, 106, 106, 106),
-                              offset: Offset(2, 5),
-                              blurRadius: 10),
-                        ],
-                      ),
-                      width: size.width,
-                      height: size.height,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            child: const Text(
-                              '“Hello, Erika!”',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            child: const Text(
-                              'Unknown',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ]),
+                  duration: const Duration(milliseconds: 450),
+                  children: favoriteQuotes),
             ),
           ],
         ),
       ],
     );
+  }
+
+  void goToPage(int index) {
+    _controllerPageFlip.currentState!.goToPage(index);
   }
 }

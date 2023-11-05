@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:recreating_ui/minimalistic_button.dart';
 import 'package:recreating_ui/book_of_quotes.dart';
+import 'package:recreating_ui/favorites_handler.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,11 +16,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _page = 0;
+  final _bookOfQuotes_controller = GlobalKey<BookOfQuotesState>();
 
+  int page = 0;
   void _generateRandomPage(int maxPages) {
     setState(() {
-      _page = Random().nextInt(maxPages);
+      page = Random().nextInt(maxPages);
+      print(page);
+      _bookOfQuotes_controller.currentState!.goToPage(page);
     });
   }
 
@@ -31,13 +35,14 @@ class _HomePageState extends State<HomePage> {
             child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const Center(
-              child: BookOfQuotes(),
+            Center(
+              child: BookOfQuotes(key: _bookOfQuotes_controller),
             ),
             const Spacer(),
             Center(
               child: MinimalisticButton(
-                onPressed: () => _generateRandomPage(100),
+                onPressed: () =>
+                    _generateRandomPage(Favorites.getQuotes().length),
                 //Assigns window height to the button height
                 height: MediaQuery.of(context).size.height * 0.6,
                 color: Colors.blue,
