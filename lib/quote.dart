@@ -11,8 +11,8 @@ class Quote {
     return Quote(
       // text: '',
       // author: '',
-      text: json['content'],
-      author: ((json['author'] != null) ? json['author'] : 'Unknown'),
+      text: json['q'],
+      author: ((json['a'] != null) ? json['a'] : 'Unknown'),
     );
   }
 

@@ -7,8 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:recreating_ui/quote.dart';
 
 Future<Quote> fetchQuote() async {
-  final response =
-      await http.get(Uri.parse('https://api.quotable.io/quotes/random'));
+  final response = await http.get(Uri.parse('https://zenquotes.io/api/random'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -33,7 +32,7 @@ Future<Quote> fetchQuote() async {
 // Singleton class
 class CurrentQuote {
   // ignore: non_constant_identifier_names
-  static int NUMBER_OF_CARDS = 5;
+  static int NUMBER_OF_CARDS = 4;
   static final CurrentQuote _currentQuote = CurrentQuote._internal();
 
   CurrentQuote._internal();
